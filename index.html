@@ -1901,8 +1901,8 @@ function buildHighlightsGrid() {
 }
 
 /* ═══════ COMPARE ═══════ */
-function toggleCompare() { cmpOpen = !cmpOpen; document.getElementById('cmpView').classList.toggle('open',cmpOpen); document.getElementById('cmpBtn').classList.toggle('active',cmpOpen); if (cmpOpen) { popCmp(); renderCmp('left'); renderCmp('right'); } }
-function closeCmp() { cmpOpen = false; document.getElementById('cmpView').classList.remove('open'); document.getElementById('cmpBtn').classList.remove('active'); }
+function toggleCompare() { cmpOpen = !cmpOpen; document.getElementById('cmpView').classList.toggle('open',cmpOpen); var cb=document.getElementById('cmpBtn'); if(cb)cb.classList.toggle('active',cmpOpen); if (cmpOpen) { popCmp(); renderCmp('left'); renderCmp('right'); } }
+function closeCmp() { cmpOpen = false; document.getElementById('cmpView').classList.remove('open'); var cb=document.getElementById('cmpBtn'); if(cb)cb.classList.remove('active'); }
 function popCmp() { const o = YRS.map(y=>'<option value="'+y+'">'+y+' (Age '+(y-1966)+')</option>').join(''); document.getElementById('cmpL').innerHTML=o; document.getElementById('cmpR').innerHTML=o; document.getElementById('cmpL').value=YRS[0]; document.getElementById('cmpR').value=YRS[YRS.length-1]; }
 function renderCmp(side) {
   const sel = document.getElementById(side==='left'?'cmpL':'cmpR'), pane = document.getElementById(side==='left'?'cmpLeft':'cmpRight');
@@ -2110,7 +2110,7 @@ function buildPhotoList() {
 function toggleGallery() {
   galOpen = !galOpen;
   const el = document.getElementById('galleryView');
-  document.getElementById('galBtn').classList.toggle('active', galOpen);
+  var gb=document.getElementById('galBtn'); if(gb)gb.classList.toggle('active', galOpen);
   if (galOpen) {
     buildPhotoList();
     const grid = document.getElementById('galleryGrid');
@@ -2156,13 +2156,13 @@ var linOpen = false;
 function toggleLIN() {
   linOpen = !linOpen;
   document.getElementById('linOverlay').classList.toggle('open', linOpen);
-  document.getElementById('linBtn').classList.toggle('active', linOpen);
+  var lb=document.getElementById('linBtn'); if(lb)lb.classList.toggle('active', linOpen);
   if (linOpen) renderLIN();
 }
 function closeLIN() {
   linOpen = false;
   document.getElementById('linOverlay').classList.remove('open');
-  document.getElementById('linBtn').classList.remove('active');
+  var lb=document.getElementById('linBtn'); if(lb)lb.classList.remove('active');
 }
 function renderLIN() {
   var frontPages = YRS.filter(function(y){ return IMAGE_IDS[y]; }).length;
