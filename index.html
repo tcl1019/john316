@@ -499,6 +499,37 @@
   }
   .ctx-song-link .song-icon { font-size: 1.1rem; }
 
+  /* ═══════ SPOTIFY EMBED PLAYER ═══════ */
+  .spotify-player-wrap {
+    border-radius: 14px; overflow: hidden;
+    border: 1px solid rgba(240,184,72,0.12);
+    background: rgba(0,0,0,0.3);
+    transition: all 0.4s var(--ease-out-expo);
+  }
+  .spotify-player-wrap:hover {
+    border-color: rgba(240,184,72,0.25);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(240,184,72,0.08);
+  }
+  .spotify-player-wrap iframe {
+    display: block; border: none; border-radius: 12px;
+  }
+  .spotify-player-label {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 14px; font-size: 0.65rem; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .spotify-player-label .spotify-icon {
+    width: 16px; height: 16px; opacity: 0.5;
+  }
+  .spotify-yt-fallback {
+    padding: 0 14px 10px; font-size: 0.75rem;
+  }
+  .spotify-yt-fallback a {
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+  }
+  .spotify-yt-fallback a:hover { color: var(--accent); }
+
   .ctx-oakland {
     background: rgba(92,201,160,0.04); border: 1px solid rgba(92,201,160,0.1);
     border-radius: 10px; padding: 16px 18px;
@@ -1290,6 +1321,176 @@
     margin-top: 8px; line-height: 1.6;
   }
 
+  /* ═══════ AMBIENT PARTICLES ═══════ */
+  #ambientParticles {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    opacity: 0.6;
+  }
+
+  /* ═══════ IMAGE SHIMMER LOADING ═══════ */
+  .np-wrap.loading {
+    position: relative; min-height: 300px;
+    background: linear-gradient(110deg, var(--surface) 30%, var(--surface2) 50%, var(--surface) 70%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* ═══════ SMOOTH PAGE TRANSITIONS ═══════ */
+  .stage-transition {
+    animation: stageEnter 0.5s var(--ease-out-expo) forwards;
+  }
+  @keyframes stageEnter {
+    from { opacity: 0; transform: translateX(40px) scale(0.98); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+  }
+  .stage-exit {
+    animation: stageExit 0.25s ease-in forwards;
+  }
+  @keyframes stageExit {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(-30px); }
+  }
+
+  /* ═══════ 3D TILT ═══════ */
+  .np-wrap.tilt-active {
+    transition: transform 0.1s linear, box-shadow 0.2s;
+    will-change: transform;
+  }
+  .np-wrap .tilt-shine {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255,255,255,0.12) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+    border-radius: inherit;
+  }
+  .np-wrap:hover .tilt-shine { opacity: 1; }
+
+  /* ═══════ ENHANCED GLOW CARDS ═══════ */
+  .ctx-block::before {
+    content: ''; position: absolute; inset: -1px; border-radius: inherit;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--current-decade) 8%, transparent), transparent 60%);
+    opacity: 0; transition: opacity 0.4s; z-index: -1; pointer-events: none;
+  }
+  .ctx-block { position: relative; }
+  .ctx-block:hover::before { opacity: 1; }
+
+  /* ═══════ PROGRESS TRACKER ═══════ */
+  .progress-tracker {
+    position: fixed; top: 56px; right: 0; z-index: 400;
+    padding: 8px 16px; background: rgba(8,11,20,0.85);
+    backdrop-filter: blur(12px); border-radius: 0 0 0 12px;
+    border-bottom: 1px solid rgba(240,184,72,0.1);
+    border-left: 1px solid rgba(240,184,72,0.1);
+    font-family: 'Space Grotesk', sans-serif; font-size: 0.65rem;
+    color: var(--muted); letter-spacing: 0.08em;
+    transition: all 0.3s var(--ease-out-expo);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .progress-tracker:hover { color: var(--text2); }
+  .progress-bar-mini {
+    width: 60px; height: 3px; background: var(--surface2); border-radius: 2px; overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%; background: var(--current-decade); border-radius: 2px;
+    transition: width 0.5s var(--ease-out-expo);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--current-decade) 50%, transparent);
+  }
+  .progress-count {
+    font-weight: 600; color: var(--current-decade);
+    font-family: 'Cormorant Garamond', serif; font-size: 0.9rem;
+  }
+
+  /* ═══════ ENHANCED COVER ENTRANCE ═══════ */
+  .cover-inner {
+    animation: coverInnerReveal 1.2s var(--ease-out-expo) forwards;
+  }
+  @keyframes coverInnerReveal {
+    0% { opacity: 0; transform: translateY(40px) scale(0.95); backdrop-filter: blur(0); }
+    100% { opacity: 1; transform: translateY(0) scale(1); backdrop-filter: blur(8px); }
+  }
+  .cover-hero-title {
+    animation: heroTitleReveal 1s 0.3s var(--ease-out-expo) both;
+  }
+  @keyframes heroTitleReveal {
+    0% { opacity: 0; transform: translateY(30px); letter-spacing: 0.1em; }
+    100% { opacity: 1; transform: translateY(0); letter-spacing: -0.02em; }
+  }
+
+  /* ═══════ NEWSPAPER HOVER SPOTLIGHT ═══════ */
+  .year-img-panel::after {
+    content: ''; position: fixed; width: 400px; height: 400px;
+    border-radius: 50%; pointer-events: none; z-index: 5;
+    background: radial-gradient(circle, color-mix(in srgb, var(--current-decade) 6%, transparent) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    opacity: 0; transition: opacity 0.5s;
+    left: var(--cursor-x, -100px); top: var(--cursor-y, -100px);
+  }
+  .year-img-panel:hover::after { opacity: 1; }
+
+  /* ═══════ KEYBOARD HINTS TOAST ═══════ */
+  .kbd-toast {
+    position: fixed; bottom: 80px; right: 20px; z-index: 450;
+    background: rgba(14,20,32,0.95); backdrop-filter: blur(16px);
+    border: 1px solid rgba(240,184,72,0.12); border-radius: 14px;
+    padding: 16px 20px; font-size: 0.72rem; color: var(--text2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    animation: toastIn 0.5s var(--ease-out-expo) forwards;
+    max-width: 240px;
+  }
+  .kbd-toast.hiding { animation: toastOut 0.4s ease-in forwards; }
+  @keyframes toastIn { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes toastOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(20px); } }
+  .kbd-toast-title {
+    font-weight: 600; color: var(--accent); font-size: 0.68rem;
+    letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .kbd-row { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+  .kbd-key {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 22px; height: 20px; padding: 0 5px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px; font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.6rem; font-weight: 600; color: var(--text);
+  }
+  .kbd-desc { color: var(--muted); font-size: 0.65rem; }
+  .kbd-dismiss {
+    margin-top: 10px; padding: 5px 12px; border: 1px solid var(--border);
+    border-radius: 6px; background: transparent; color: var(--muted);
+    cursor: pointer; font-size: 0.6rem; font-family: 'Space Grotesk', sans-serif;
+    transition: all 0.2s;
+  }
+  .kbd-dismiss:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ═══════ YEAR NAV ARROWS ═══════ */
+  .year-nav-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    z-index: 20; width: 48px; height: 80px;
+    background: rgba(8,11,20,0.6); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.06);
+    color: var(--muted); font-size: 1.6rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s var(--ease-out-expo); opacity: 0;
+  }
+  .year-nav-arrow:hover {
+    background: rgba(240,184,72,0.12); color: var(--accent);
+    border-color: rgba(240,184,72,0.2);
+    box-shadow: 0 0 20px rgba(240,184,72,0.1);
+  }
+  .year-nav-arrow.left { left: 0; border-radius: 0 12px 12px 0; }
+  .year-nav-arrow.right { right: 0; border-radius: 12px 0 0 12px; }
+  .year-view:hover ~ .year-nav-arrow,
+  .stage:hover .year-nav-arrow { opacity: 1; }
+
+  @media (max-width: 900px) {
+    .progress-tracker { display: none; }
+    .kbd-toast { display: none; }
+    .year-nav-arrow { display: none; }
+  }
+
   /* ═══════ PRINT ═══════ */
   @media print {
     .topbar, .sidebar, .timeline, .lightbox, .search-overlay,
@@ -1304,6 +1505,13 @@
 </head>
 <body>
 
+<canvas id="ambientParticles"></canvas>
+<div class="progress-tracker" id="progressTracker" style="display:none">
+  <span class="progress-count" id="progressCount">0</span>
+  <div class="progress-bar-mini"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+  <span id="progressLabel">of 60 explored</span>
+</div>
+
 <div class="topbar">
   <button class="menu-btn" onclick="toggleSidebar()" title="Menu (M)">☰</button>
   <div class="topbar-brand">The Oakland Tribune<em>Birthday Archive</em></div>
@@ -1317,6 +1525,8 @@
     <button class="tb-btn" onclick="toggleDecades()" id="decadesBtn" title="Jump to Decade">🕰 <span>Decades</span></button>
     <button class="tb-btn" onclick="toggleHighlights()" id="highlightsBtn" title="Key Moments">⭐ <span>Highlights</span></button>
     <button class="tb-btn" onclick="startTrivia()" title="Trivia">❓ <span>Trivia</span></button>
+    <button class="tb-btn" onclick="toggleGallery()" id="galBtn" title="Photo Gallery">📷 <span>Photos</span></button>
+    <button class="tb-btn" onclick="toggleLIN()" id="linBtn" title="Life in Numbers">📊 <span>Numbers</span></button>
     <button class="tb-btn" onclick="togglePlay()" id="playBtn" title="Slideshow">▶ <span>Play</span></button>
   </div>
 </div>
@@ -1478,6 +1688,69 @@ const DAYS = {
   2025:'Sunday'
 };
 
+const SPOTIFY_TRACKS = {
+  1966: {id:'6v4gV9s0pnwKbmF1yk5knO', title:"Papa's Got a Brand New Bag", artist:'James Brown'},
+  1967: {id:'7s25THrKz86DM225dOYwnr', title:'Respect', artist:'Aretha Franklin'},
+  1968: {id:'3zBhihYUHBmGd2bcQIobrF', title:"(Sittin' On) The Dock of the Bay", artist:'Otis Redding'},
+  1969: {id:'7lL2lMWNtzOcf5HnEudNgn', title:'Everyday People', artist:'Sly & the Family Stone'},
+  1970: {id:'7DUYWVDcJAbCoHs6LtXsKj', title:'Thank You (Falettinme Be Mice Elf Agin)', artist:'Sly & the Family Stone'},
+  1971: {id:'7iDMBNQOcggVZQne5uw9Vm', title:"What's Going On", artist:'Marvin Gaye'},
+  1972: {id:'0SxFyA4FqmEQqZVuAlg8lf', title:'The First Time Ever I Saw Your Face', artist:'Roberta Flack'},
+  1973: {id:'4N0TP4Rmj6QQezWV88ARNJ', title:'Superstition', artist:'Stevie Wonder'},
+  1974: {id:'1inwt0v9a4ib9yS6Y4KsdM', title:"You Haven't Done Nothin'", artist:'Stevie Wonder'},
+  1975: {id:'0RgcOUQg4qYAEt9RIdf3oB', title:'Shining Star', artist:'Earth, Wind & Fire'},
+  1976: {id:'0tqp1kKvgBFsfIszEaviqZ', title:'I Wish', artist:'Stevie Wonder'},
+  1977: {id:'12sRJfGKwQ3mWWECnZK0GE', title:'Got to Give It Up', artist:'Marvin Gaye'},
+  1978: {id:'7Kszjzps0xbQXyo1pO4KfE', title:'Le Freak', artist:'Chic'},
+  1979: {id:'46eu3SBuFCXWsPT39Yg3tJ', title:"Don't Stop 'Til You Get Enough", artist:'Michael Jackson'},
+  1980: {id:'5TvcggVu3s2P1fMAS8BupX', title:'The Breaks', artist:'Kurtis Blow'},
+  1981: {id:'2dCmGcEOQrMQhMMS8Vj7Ca', title:'Super Freak', artist:'Rick James'},
+  1982: {id:'5ChkMS8OtdzJeqyybCc9R5', title:'Billie Jean', artist:'Michael Jackson'},
+  1983: {id:'3S2R0EVwBSAVMd5UMgKTL0', title:'Thriller', artist:'Michael Jackson'},
+  1984: {id:'51H2y6YrNNXcy3dfc3qSbA', title:'When Doves Cry', artist:'Prince'},
+  1985: {id:'1lx8ddGT5wCD6W2xmLeRKG', title:'Saving All My Love for You', artist:'Whitney Houston'},
+  1986: {id:'1cOj24fUMnBSXhtp7waHVW', title:"That's What Friends Are For", artist:'Dionne Warwick'},
+  1987: {id:'5rw4f22Yxn8oziUAyPIABE', title:'Paid in Full', artist:'Eric B. & Rakim'},
+  1988: {id:'0v9kGNjkKdQUdDoBIuiph4', title:'My Prerogative', artist:'Bobby Brown'},
+  1989: {id:'1yo16b3u0lptm6Cs7lx4AD', title:'Fight the Power', artist:'Public Enemy'},
+  1990: {id:'7bgEVuh0wL4VRW79GkioyH', title:"U Can't Touch This", artist:'MC Hammer'},
+  1991: {id:'4LxIGAVfcQIw0zAQRyFhU8', title:'Motownphilly', artist:'Boyz II Men'},
+  1992: {id:'3l3xTXsUXeWlkPqzMs7mPD', title:'End of the Road', artist:'Boyz II Men'},
+  1993: {id:'4eHbdreAnSOrDDsFfc4Fpm', title:'I Will Always Love You', artist:'Whitney Houston'},
+  1994: {id:'7G3lxTsMfSx4yarMkfgnTC', title:'The World Is Yours', artist:'Nas'},
+  1995: {id:'1DIXPcTDzTj8ZMHt3PDt8p', title:"Gangsta's Paradise", artist:'Coolio'},
+  1996: {id:'1MAqR81Tz28IIqMJ2KUDAO', title:'Killing Me Softly', artist:'Fugees'},
+  1997: {id:'1oLIBuedMjAbHlO4WTGJi3', title:'Hypnotize', artist:'The Notorious B.I.G.'},
+  1998: {id:'506HftMjIdY3ZWAPnHslOm', title:'Doo Wop (That Thing)', artist:'Lauryn Hill'},
+  1999: {id:'1KGi9sZVMeszgZOWivFpxs', title:'No Scrubs', artist:'TLC'},
+  2000: {id:'4oPNN7syJYSjzDhRerF966', title:'Untitled (How Does It Feel)', artist:"D'Angelo"},
+  2001: {id:'0KQx6HOpJueiSkztcS0r7D', title:"Fallin'", artist:'Alicia Keys'},
+  2002: {id:'04KTF78FFg8sOHC1BADqbY', title:'Hot in Herre', artist:'Nelly'},
+  2003: {id:'7iL6o9tox1zgHpKUfh9vuC', title:'In Da Club', artist:'50 Cent'},
+  2004: {id:'5rb9QrpfcKFHM1EUbSIurX', title:'Yeah!', artist:'Usher'},
+  2005: {id:'3LmvfNUQtglbTrydsdIqFU', title:'We Belong Together', artist:'Mariah Carey'},
+  2006: {id:'2AaS5N2LmQi42fHwP75c9g', title:'Déjà Vu', artist:'Beyoncé'},
+  2007: {id:'1G7DcLzPnopdZjLkev0K4e', title:'Irreplaceable', artist:'Beyoncé'},
+  2008: {id:'6ScJMrlpiLfZUGtWp4QIVt', title:'A Milli', artist:'Lil Wayne'},
+  2009: {id:'5KZQfyxfIbgaHWFf1bixK5', title:'Boom Boom Pow', artist:'Black Eyed Peas'},
+  2010: {id:'3DK6m7It6Pw857FcQftMds', title:'Runaway', artist:'Kanye West'},
+  2011: {id:'3rfpTrCNol2OmFkdzWqOHe', title:'Niggas in Paris', artist:'Jay-Z & Kanye West'},
+  2012: {id:'6REbwUNlppTfcnV4d4ZoZi', title:'Swimming Pools (Drank)', artist:'Kendrick Lamar'},
+  2013: {id:'6jG2YzhxptolDzLHTGLt7S', title:'Drunk in Love', artist:'Beyoncé'},
+  2014: {id:'60nZcImufyMA1MKQY3dcCH', title:'Happy', artist:'Pharrell Williams'},
+  2015: {id:'3iVcZ5G6tvkXZkZKlMpIUs', title:'Alright', artist:'Kendrick Lamar'},
+  2016: {id:'6g0Orsxv6glTJCt4cHsRsQ', title:'Formation', artist:'Beyoncé'},
+  2017: {id:'7KXjTSCq5nL1LoYtL7XAwS', title:'HUMBLE.', artist:'Kendrick Lamar'},
+  2018: {id:'6KBYefIoo7KydImq1uUQlL', title:'Bodak Yellow', artist:'Cardi B'},
+  2019: {id:'5hVghJ4KaYES3BFUATCYn0', title:'EARFQUAKE', artist:'Tyler, The Creator'},
+  2020: {id:'0VjIjW4GlUZAMYd2vXMi3b', title:'Blinding Lights', artist:'The Weeknd'},
+  2021: {id:'0BiK5BbYNFLb88CCOxBFJe', title:'LUMBERJACK', artist:'Tyler, The Creator'},
+  2022: {id:'5pyoxDZ1PX0KxBxiRVxA4U', title:'BREAK MY SOUL', artist:'Beyoncé'},
+  2023: {id:'1Qrg8KqiBpW07V7PNxwwwL', title:'Kill Bill', artist:'SZA'},
+  2024: {id:'6AI3ezQ4o3HUoP6Dhudph3', title:'Not Like Us', artist:'Kendrick Lamar'},
+  2025: {id:'2CGNAOSuO1MEFCbBRgUzjd', title:'luther', artist:'Kendrick Lamar ft. SZA'}
+};
+
 const YRS = [];
 for (let y = 1966; y <= 2025; y++) YRS.push(y);
 
@@ -1571,7 +1844,7 @@ const DECADES = {
 
 /* ═══════ COVER ═══════ */
 function showCover() {
-  closeSearch(); closeCmp(); closeLIN(); closeDecades(); closeHighlights(); stopPlay();
+  closeSearch(); closeCmp(); closeLIN(); closeDecades(); closeHighlights(); closeGallery(); stopPlay();
   const presidents = { size: 11 };
   const decades = new Set(YRS.map(y => Math.floor(y/10)*10));
   const frontPages = YRS.filter(y => IMAGE_IDS[y]).length;
@@ -1662,9 +1935,17 @@ function renderYear(idx) {
 
     if (h.culture) {
       ctx += '<div class="ctx-block anim-fade-up" data-delay="5"><div class="ctx-label">Culture</div><div class="ctx-culture">' + h.culture + '</div></div>';
+      var spot = SPOTIFY_TRACKS[y];
       var songMatch = h.culture.match(/\u2014\s*'([^']+)'/);
       if (!songMatch) songMatch = h.culture.match(/'([^']{4,})'/);
-      if (songMatch) {
+      if (spot) {
+        var songName = spot.title;
+        ctx += '<div class="ctx-block spotify-player-wrap anim-fade-up" data-delay="6">' +
+          '<div class="spotify-player-label"><svg class="spotify-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg> Now Playing</div>' +
+          '<iframe src="https://open.spotify.com/embed/track/' + spot.id + '?utm_source=generator&theme=0" width="100%" height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>' +
+          '<div class="spotify-yt-fallback"><a href="https://www.youtube.com/results?search_query=' + encodeURIComponent(songName + ' ' + spot.artist + ' official') + '" target="_blank">\u266B Also find on YouTube</a></div>' +
+          '</div>';
+      } else if (songMatch) {
         var songName = songMatch[1];
         ctx += '<div class="ctx-block anim-fade-up" data-delay="6"><a class="ctx-song-link" href="https://www.youtube.com/results?search_query=' + encodeURIComponent(songName + ' ' + y + ' official') + '" target="_blank"><span class="song-icon">\u266B</span> Listen to \u201C' + songName + '\u201D on YouTube</a></div>';
       }
@@ -1736,24 +2017,43 @@ function renderYear(idx) {
       '</div>' +
     '</div>';
 
-  // Simple clean swap — no stacking, no absolute positioning fights
+  // Smooth transition: fade out old, swap, fade in new
   const stage = document.getElementById('stage');
-  stage.innerHTML = newHTML;
+  const oldView = stage.querySelector('.year-view, .cover-view');
+  if (oldView && curIdx >= 0) {
+    oldView.classList.add('stage-exit');
+    setTimeout(function() {
+      stage.innerHTML = newHTML;
+      var newView = stage.querySelector('.year-view');
+      if (newView) newView.classList.add('stage-transition');
+      finishRender();
+    }, 200);
+  } else {
+    stage.innerHTML = newHTML;
+    var newView = stage.querySelector('.year-view');
+    if (newView) newView.classList.add('stage-transition');
+    finishRender();
+  }
 
-  curIdx = idx; updateTL(); updateSB();
-  preloadAdjacent(idx);
+  function finishRender() {
+    curIdx = idx; updateTL(); updateSB();
+    preloadAdjacent(idx);
+    updateProgress(y);
+    addImageShimmer();
+    addYearNavArrows();
 
-  // Trigger reveal animations on the info panel
-  setTimeout(() => {
-    const infoPanel = stage.querySelector('.year-info');
-    if (infoPanel) {
-      infoPanel.querySelectorAll('.anim-fade-up').forEach(el => el.classList.add('visible'));
+    // Trigger reveal animations on the info panel
+    setTimeout(() => {
+      const infoPanel = stage.querySelector('.year-info');
+      if (infoPanel) {
+        infoPanel.querySelectorAll('.anim-fade-up').forEach(el => el.classList.add('visible'));
+      }
+    }, 100);
+
+    // Celebrate milestone years
+    if (y === 1966 || y === 1992 || y === 2025 || age === 21 || age === 30 || age === 40 || age === 50) {
+      setTimeout(launchConfetti, 600);
     }
-  }, 100);
-
-  // Celebrate milestone years
-  if (y === 1966 || y === 1992 || y === 2025 || age === 21 || age === 30 || age === 40 || age === 50) {
-    setTimeout(launchConfetti, 600);
   }
 }
 
@@ -1761,7 +2061,7 @@ function renderYear(idx) {
 var shownDecades = {};
 function goIdx(i) {
   if (i < 0 || i >= YRS.length) return;
-  closeSearch(); closeCmp(); closeLIN(); closeDecades(); closeHighlights(); stopPlay();
+  closeSearch(); closeCmp(); closeLIN(); closeDecades(); closeHighlights(); closeGallery(); stopPlay();
   // Show decade interstitial only when moving FORWARD into a new decade, and only once each
   if (curIdx >= 0 && i > curIdx) {
     const oldDecade = Math.floor(YRS[curIdx] / 10) * 10;
@@ -1851,7 +2151,7 @@ function toggleDecades() {
   var btn = document.getElementById('decadesBtn');
   if (btn) btn.classList.toggle('active', decadesOpen);
   if (decadesOpen) {
-    closeHighlights(); closeSearch(); closeCmp(); closeLIN();
+    closeHighlights(); closeSearch(); closeCmp(); closeLIN(); closeGallery();
     buildDecadesGrid();
     el.classList.add('open');
   } else {
@@ -1896,7 +2196,7 @@ function toggleHighlights() {
   var btn = document.getElementById('highlightsBtn');
   if (btn) btn.classList.toggle('active', highlightsOpen);
   if (highlightsOpen) {
-    closeDecades(); closeSearch(); closeCmp(); closeLIN();
+    closeDecades(); closeSearch(); closeCmp(); closeLIN(); closeGallery();
     buildHighlightsGrid();
     el.classList.add('open');
   } else {
@@ -2058,7 +2358,7 @@ function stopPlay() { if (playTimer) togglePlay(); }
 document.addEventListener('keydown', e => {
   const lb=document.getElementById('lightbox').classList.contains('open'), md=document.getElementById('trvModal').classList.contains('open');
   const ps=document.getElementById('photoStory').classList.contains('open');
-  if(e.key==='Escape'){closeLB();closeSearch();closeTrv();closeSB();closeCmp();closeLIN();closeDecades();closeHighlights();if(ps)closePhotoStory();return;}
+  if(e.key==='Escape'){closeLB();closeSearch();closeTrv();closeSB();closeCmp();closeLIN();closeDecades();closeHighlights();closeGallery();if(ps)closePhotoStory();return;}
   if(ps){if(e.key==='ArrowLeft')navPhotoStory(-1);if(e.key==='ArrowRight')navPhotoStory(1);return;}
   if(lb){if(e.key==='ArrowLeft')navLB(-1);if(e.key==='ArrowRight')navLB(1);return;}
   if(md)return;
@@ -2183,6 +2483,11 @@ function buildTickerHTML() {
 /* ═══════ LIFE IN NUMBERS ═══════ */
 /* ═══════ GALLERY ═══════ */
 var galOpen = false;
+function closeGallery() {
+  galOpen = false;
+  document.getElementById('galleryView').classList.remove('open');
+  var gb=document.getElementById('galBtn'); if(gb)gb.classList.remove('active');
+}
 var PERSONAL_PHOTOS = [];
 function buildPhotoList() {
   PERSONAL_PHOTOS = [];
@@ -2309,6 +2614,171 @@ function renderLIN() {
   }, 200);
 }
 
+/* ═══════ AMBIENT PARTICLES ═══════ */
+function initAmbientParticles() {
+  const cvs = document.getElementById('ambientParticles');
+  if (!cvs) return;
+  const ctx = cvs.getContext('2d');
+  let w, h;
+  function resize() { w = cvs.width = innerWidth; h = cvs.height = innerHeight; }
+  resize();
+  addEventListener('resize', resize);
+  const particles = [];
+  const count = Math.min(40, Math.floor(innerWidth / 30));
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * w, y: Math.random() * h,
+      r: 0.5 + Math.random() * 1.5,
+      vx: (Math.random() - 0.5) * 0.2,
+      vy: -0.1 - Math.random() * 0.3,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.001 + Math.random() * 0.003
+    });
+  }
+  function draw(t) {
+    ctx.clearRect(0, 0, w, h);
+    const decColor = getComputedStyle(document.documentElement).getPropertyValue('--current-decade').trim();
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
+      if (p.x < -10) p.x = w + 10;
+      if (p.x > w + 10) p.x = -10;
+      const a = 0.15 + 0.15 * Math.sin(t * p.speed + p.phase);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(240,184,72,' + a + ')';
+      ctx.fill();
+      if (p.r > 1) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(240,184,72,' + (a * 0.08) + ')';
+        ctx.fill();
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+}
+
+/* ═══════ 3D TILT ON NEWSPAPER ═══════ */
+function init3DTilt() {
+  document.addEventListener('mousemove', function(e) {
+    // Update cursor position for spotlight
+    document.documentElement.style.setProperty('--cursor-x', e.clientX + 'px');
+    document.documentElement.style.setProperty('--cursor-y', e.clientY + 'px');
+
+    const wrap = document.querySelector('.np-wrap');
+    if (!wrap || innerWidth < 900) return;
+    const rect = wrap.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) / rect.width;
+    const dy = (e.clientY - cy) / rect.height;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 1.5) {
+      wrap.classList.add('tilt-active');
+      const rotY = dx * 6;
+      const rotX = -dy * 4;
+      wrap.style.transform = 'perspective(800px) rotateY(' + rotY + 'deg) rotateX(' + rotX + 'deg) scale(1.01)';
+      // Update shine position
+      const shine = wrap.querySelector('.tilt-shine');
+      if (shine) {
+        shine.style.setProperty('--mx', ((dx + 0.5) * 100) + '%');
+        shine.style.setProperty('--my', ((dy + 0.5) * 100) + '%');
+      }
+    } else {
+      wrap.classList.remove('tilt-active');
+      wrap.style.transform = '';
+    }
+  });
+  document.addEventListener('mouseleave', function() {
+    const wrap = document.querySelector('.np-wrap');
+    if (wrap) { wrap.classList.remove('tilt-active'); wrap.style.transform = ''; }
+  });
+}
+
+/* ═══════ PROGRESS TRACKER ═══════ */
+var visitedYears = new Set();
+function updateProgress(year) {
+  if (year) visitedYears.add(year);
+  var tracker = document.getElementById('progressTracker');
+  var count = visitedYears.size;
+  if (count === 0) { tracker.style.display = 'none'; return; }
+  tracker.style.display = 'flex';
+  document.getElementById('progressCount').textContent = count;
+  document.getElementById('progressFill').style.width = (count / 60 * 100) + '%';
+  if (count >= 60) {
+    document.getElementById('progressLabel').textContent = 'All explored!';
+  }
+}
+
+/* ═══════ KEYBOARD HINTS TOAST ═══════ */
+function showKeyboardHints() {
+  if (sessionStorage.getItem('kbdShown')) return;
+  sessionStorage.setItem('kbdShown', '1');
+  setTimeout(function() {
+    var toast = document.createElement('div');
+    toast.className = 'kbd-toast';
+    toast.innerHTML =
+      '<div class="kbd-toast-title">Keyboard Shortcuts</div>' +
+      '<div class="kbd-row"><span class="kbd-key">←</span><span class="kbd-key">→</span><span class="kbd-desc">Navigate years</span></div>' +
+      '<div class="kbd-row"><span class="kbd-key">/</span><span class="kbd-desc">Search headlines</span></div>' +
+      '<div class="kbd-row"><span class="kbd-key">M</span><span class="kbd-desc">Open menu</span></div>' +
+      '<div class="kbd-row"><span class="kbd-key">R</span><span class="kbd-desc">Random year</span></div>' +
+      '<button class="kbd-dismiss" onclick="this.parentElement.classList.add(\'hiding\');setTimeout(function(){document.querySelector(\'.kbd-toast\').remove()},400)">Got it</button>';
+    document.body.appendChild(toast);
+    setTimeout(function() {
+      var t = document.querySelector('.kbd-toast');
+      if (t && !t.classList.contains('hiding')) {
+        t.classList.add('hiding');
+        setTimeout(function() { if (t.parentNode) t.remove(); }, 400);
+      }
+    }, 8000);
+  }, 3000);
+}
+
+/* ═══════ IMAGE SHIMMER ═══════ */
+function addImageShimmer() {
+  var wraps = document.querySelectorAll('.np-wrap');
+  wraps.forEach(function(wrap) {
+    var img = wrap.querySelector('img');
+    if (!img) return;
+    // Add shine overlay for 3D tilt
+    if (!wrap.querySelector('.tilt-shine')) {
+      var shine = document.createElement('div');
+      shine.className = 'tilt-shine';
+      wrap.appendChild(shine);
+    }
+    if (img.complete && img.naturalWidth) return;
+    wrap.classList.add('loading');
+    img.addEventListener('load', function() { wrap.classList.remove('loading'); });
+    img.addEventListener('error', function() { wrap.classList.remove('loading'); });
+  });
+}
+
+/* ═══════ YEAR NAV ARROWS ═══════ */
+function addYearNavArrows() {
+  var stage = document.getElementById('stage');
+  var existing = stage.querySelectorAll('.year-nav-arrow');
+  existing.forEach(function(e) { e.remove(); });
+  if (curIdx < 0) return;
+  var left = document.createElement('button');
+  left.className = 'year-nav-arrow left';
+  left.innerHTML = '‹';
+  left.title = 'Previous year';
+  left.onclick = function() { goDir(-1); };
+  if (curIdx <= 0) left.style.display = 'none';
+  var right = document.createElement('button');
+  right.className = 'year-nav-arrow right';
+  right.innerHTML = '›';
+  right.title = 'Next year';
+  right.onclick = function() { goDir(1); };
+  if (curIdx >= YRS.length - 1) right.style.display = 'none';
+  stage.appendChild(left);
+  stage.appendChild(right);
+  setTimeout(function() { left.style.opacity = ''; right.style.opacity = ''; }, 100);
+}
+
 /* ═══════ SWIPE (mobile-aware) ═══════ */
 let tsx=0, tsy=0, tsTime=0, tsTracking=false;
 document.getElementById('stage').addEventListener('touchstart', function(e) {
@@ -2338,6 +2808,9 @@ document.getElementById('stage').addEventListener('touchend', function(e) {
 
 /* ═══════ INIT ═══════ */
 buildSidebar(); buildTL(); showCover();
+initAmbientParticles();
+init3DTilt();
+showKeyboardHints();
 </script>
 </body>
 </html>
