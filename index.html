@@ -499,6 +499,37 @@
   }
   .ctx-song-link .song-icon { font-size: 1.1rem; }
 
+  /* ═══════ SPOTIFY EMBED PLAYER ═══════ */
+  .spotify-player-wrap {
+    border-radius: 14px; overflow: hidden;
+    border: 1px solid rgba(240,184,72,0.12);
+    background: rgba(0,0,0,0.3);
+    transition: all 0.4s var(--ease-out-expo);
+  }
+  .spotify-player-wrap:hover {
+    border-color: rgba(240,184,72,0.25);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3), 0 0 0 1px rgba(240,184,72,0.08);
+  }
+  .spotify-player-wrap iframe {
+    display: block; border: none; border-radius: 12px;
+  }
+  .spotify-player-label {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 14px; font-size: 0.65rem; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .spotify-player-label .spotify-icon {
+    width: 16px; height: 16px; opacity: 0.5;
+  }
+  .spotify-yt-fallback {
+    padding: 0 14px 10px; font-size: 0.75rem;
+  }
+  .spotify-yt-fallback a {
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+  }
+  .spotify-yt-fallback a:hover { color: var(--accent); }
+
   .ctx-oakland {
     background: rgba(92,201,160,0.04); border: 1px solid rgba(92,201,160,0.1);
     border-radius: 10px; padding: 16px 18px;
@@ -1657,6 +1688,69 @@ const DAYS = {
   2025:'Sunday'
 };
 
+const SPOTIFY_TRACKS = {
+  1966: {id:'6v4gV9s0pnwKbmF1yk5knO', title:"Papa's Got a Brand New Bag", artist:'James Brown'},
+  1967: {id:'7s25THrKz86DM225dOYwnr', title:'Respect', artist:'Aretha Franklin'},
+  1968: {id:'3zBhihYUHBmGd2bcQIobrF', title:"(Sittin' On) The Dock of the Bay", artist:'Otis Redding'},
+  1969: {id:'4Nzpp3PBTL8ShZQRyLguFK', title:'Everyday People', artist:'Sly & the Family Stone'},
+  1970: {id:'4AZJ5WTioqdmLCK1F2IFeV', title:'Thank You (Falettinme Be Mice Elf Agin)', artist:'Sly & the Family Stone'},
+  1971: {id:'3Um9toULmYFGCpvaIPFw7l', title:"What's Going On", artist:'Marvin Gaye'},
+  1972: {id:'1TCcfDxkxrZyhXtS2ztQAr', title:'The First Time Ever I Saw Your Face', artist:'Roberta Flack'},
+  1973: {id:'1h2xVEoJORqrg71HocgqXd', title:'Superstition', artist:'Stevie Wonder'},
+  1974: {id:'0Fjo3sf8HThtmJtTLDdK2e', title:"You Haven't Done Nothin'", artist:'Stevie Wonder'},
+  1975: {id:'7Ava89vddfoaLsAlS0Mlcw', title:'Shining Star', artist:'Earth, Wind & Fire'},
+  1976: {id:'0bRXwKfigvpKEBwwFNMYTP', title:'I Wish', artist:'Stevie Wonder'},
+  1977: {id:'4WdMwEVWsmTdhLaVG1KlhU', title:'Got to Give It Up', artist:'Marvin Gaye'},
+  1978: {id:'6Y0YZhO12MsZ9O77dELxMq', title:'Le Freak', artist:'Chic'},
+  1979: {id:'3S2R0EVwBSAVMd5UMgKTL0', title:"Don't Stop 'Til You Get Enough", artist:'Michael Jackson'},
+  1980: {id:'75GmGMB4q5baxh7P7vcH93', title:'The Breaks', artist:'Kurtis Blow'},
+  1981: {id:'13MQ6GmHEw5redBk4xiVBl', title:'Super Freak', artist:'Rick James'},
+  1982: {id:'5ChkMS8OtdzJeqyybCc9R5', title:'Billie Jean', artist:'Michael Jackson'},
+  1983: {id:'2LlQb7Uoj1kKyGhlkBf9aC', title:'Thriller', artist:'Michael Jackson'},
+  1984: {id:'62LJFaYkHCaAlvHMFqiBez', title:'When Doves Cry', artist:'Prince'},
+  1985: {id:'2Xi5XP90Eij41AYuBFqlxb', title:'Saving All My Love for You', artist:'Whitney Houston'},
+  1986: {id:'1bfMXodNBClLjIAh3CV9pu', title:"That's What Friends Are For", artist:'Dionne Warwick'},
+  1987: {id:'1GJL7r0FNzpAYXMPMhkBYR', title:'Paid in Full', artist:'Eric B. & Rakim'},
+  1988: {id:'4Lf9lossqXCFOgPk5iaOiE', title:'My Prerogative', artist:'Bobby Brown'},
+  1989: {id:'1yo16b3u0lptm6Cs7lx4AD', title:'Fight the Power', artist:'Public Enemy'},
+  1990: {id:'1B75hgRqe7A4fwee3g3Wmu', title:"U Can't Touch This", artist:'MC Hammer'},
+  1991: {id:'1m8s4fBPICAkJsZBqzs1bz', title:'Motownphilly', artist:'Boyz II Men'},
+  1992: {id:'0oki0MKmCmGpGhBRTMFOPa', title:'End of the Road', artist:'Boyz II Men'},
+  1993: {id:'4eHbdreAnSOrDDsFfc4Fpm', title:'I Will Always Love You', artist:'Whitney Houston'},
+  1994: {id:'0k9enPFRmBPVlJFGVDAqjG', title:'The World Is Yours', artist:'Nas'},
+  1995: {id:'1DIXPcTDzTj8ZMHt3PDt8p', title:"Gangsta's Paradise", artist:'Coolio'},
+  1996: {id:'7y8sMJRCYMIXBgfljPOFhN', title:'Killing Me Softly', artist:'Fugees'},
+  1997: {id:'7KwZNVEaqGsLIT1gAHBEYp', title:'Hypnotize', artist:'The Notorious B.I.G.'},
+  1998: {id:'1wO3mxJg8mi5PTIbDfSat2', title:'Doo Wop (That Thing)', artist:'Lauryn Hill'},
+  1999: {id:'6PCUP3dWBTBSSb8SNPnRVi', title:'No Scrubs', artist:'TLC'},
+  2000: {id:'2HRqTpkrJO5ggZyyK6NPWz', title:'Untitled (How Does It Feel)', artist:"D'Angelo"},
+  2001: {id:'3Ti0GdlrotgKPVyaENhRaV', title:"Fallin'", artist:'Alicia Keys'},
+  2002: {id:'04KTF78FFg8sOHC1BADqbY', title:'Hot in Herre', artist:'Nelly'},
+  2003: {id:'7iN1s7xHE4ifF5povM6A48', title:'In Da Club', artist:'50 Cent'},
+  2004: {id:'3Qm86XLflmIXVm1wcwkGiG', title:'Yeah!', artist:'Usher'},
+  2005: {id:'07CnMloaACYeFpwgZ9ihfj', title:'We Belong Together', artist:'Mariah Carey'},
+  2006: {id:'6ko0nDPsN8mEgW2MXlMzmb', title:'Déjà Vu', artist:'Beyoncé'},
+  2007: {id:'1z3ugFmUKoCzGsI6jdY4Ci', title:'Irreplaceable', artist:'Beyoncé'},
+  2008: {id:'3oZ4HBfIjahfHjncO9HWQD', title:'A Milli', artist:'Lil Wayne'},
+  2009: {id:'0RFCHlNuTeUHIB36xMk5a7', title:'Boom Boom Pow', artist:'Black Eyed Peas'},
+  2010: {id:'3e21GXZX8cOYjMb6TWLIPG', title:'Runaway', artist:'Kanye West'},
+  2011: {id:'4Li2WHPkuyCdtmokzW2007', title:'Niggas in Paris', artist:'Jay-Z & Kanye West'},
+  2012: {id:'5yEPxDjbbzUzyauGtnmVEC', title:'Swimming Pools (Drank)', artist:'Kendrick Lamar'},
+  2013: {id:'6jG2YDCVinIRI9D2if3zSo', title:'Drunk in Love', artist:'Beyoncé'},
+  2014: {id:'60nZcImufyMA1MKQY3dcCH', title:'Happy', artist:'Pharrell Williams'},
+  2015: {id:'3iVcZ5G6tvkXZkZKlMpIUs', title:'Alright', artist:'Kendrick Lamar'},
+  2016: {id:'6g0Orsxv6glTJCt4cHsRsQ', title:'Formation', artist:'Beyoncé'},
+  2017: {id:'7KXjTSCq5nL1LoYtL7XAwS', title:'HUMBLE.', artist:'Kendrick Lamar'},
+  2018: {id:'3fULHpgMoB62FxDqIYRhhO', title:'Bodak Yellow', artist:'Cardi B'},
+  2019: {id:'5hVghJ4KaYES3BFUATCYn0', title:'EARFQUAKE', artist:'Tyler, The Creator'},
+  2020: {id:'0VjIjW4GlUZAMYd2vXMi3b', title:'Blinding Lights', artist:'The Weeknd'},
+  2021: {id:'38T0tPVZHcPZyhtOcCP0QR', title:'LUMBERJACK', artist:'Tyler, The Creator'},
+  2022: {id:'0dOg1ySSI7NkpAe89Fo7GW', title:'Break My Soul', artist:'Beyoncé'},
+  2023: {id:'1Qrg8KqiBpW07V7PNxwwwL', title:'Kill Bill', artist:'SZA'},
+  2024: {id:'6AI3ezQ4o3HUoP6Dhudph3', title:'Not Like Us', artist:'Kendrick Lamar'},
+  2025: {id:'4ZXwEBR4bn7fMbOCX6PZwj', title:'squabble up', artist:'Kendrick Lamar'}
+};
+
 const YRS = [];
 for (let y = 1966; y <= 2025; y++) YRS.push(y);
 
@@ -1841,9 +1935,17 @@ function renderYear(idx) {
 
     if (h.culture) {
       ctx += '<div class="ctx-block anim-fade-up" data-delay="5"><div class="ctx-label">Culture</div><div class="ctx-culture">' + h.culture + '</div></div>';
+      var spot = SPOTIFY_TRACKS[y];
       var songMatch = h.culture.match(/\u2014\s*'([^']+)'/);
       if (!songMatch) songMatch = h.culture.match(/'([^']{4,})'/);
-      if (songMatch) {
+      if (spot) {
+        var songName = spot.title;
+        ctx += '<div class="ctx-block spotify-player-wrap anim-fade-up" data-delay="6">' +
+          '<div class="spotify-player-label"><svg class="spotify-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg> Now Playing</div>' +
+          '<iframe src="https://open.spotify.com/embed/track/' + spot.id + '?utm_source=generator&theme=0" width="100%" height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>' +
+          '<div class="spotify-yt-fallback"><a href="https://www.youtube.com/results?search_query=' + encodeURIComponent(songName + ' ' + spot.artist + ' official') + '" target="_blank">\u266B Also find on YouTube</a></div>' +
+          '</div>';
+      } else if (songMatch) {
         var songName = songMatch[1];
         ctx += '<div class="ctx-block anim-fade-up" data-delay="6"><a class="ctx-song-link" href="https://www.youtube.com/results?search_query=' + encodeURIComponent(songName + ' ' + y + ' official') + '" target="_blank"><span class="song-icon">\u266B</span> Listen to \u201C' + songName + '\u201D on YouTube</a></div>';
       }
