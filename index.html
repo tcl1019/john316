@@ -513,6 +513,7 @@
   .spotify-player-wrap iframe {
     display: block; border: none; border-radius: 12px;
   }
+  #spotify-embed-target { min-height: 152px; }
   .spotify-player-label {
     display: flex; align-items: center; gap: 8px;
     padding: 8px 14px; font-size: 0.65rem; font-weight: 600;
@@ -1942,7 +1943,7 @@ function renderYear(idx) {
         var songName = spot.title;
         ctx += '<div class="ctx-block spotify-player-wrap anim-fade-up" data-delay="6">' +
           '<div class="spotify-player-label"><svg class="spotify-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg> Now Playing</div>' +
-          '<iframe src="https://open.spotify.com/embed/track/' + spot.id + '?utm_source=generator&theme=0&autoplay=1" width="100%" height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>' +
+          '<div id="spotify-embed-target" data-spotify-id="' + spot.id + '"></div>' +
           '<div class="spotify-yt-fallback"><a href="https://www.youtube.com/results?search_query=' + encodeURIComponent(songName + ' ' + spot.artist + ' official') + '" target="_blank">\u266B Also find on YouTube</a></div>' +
           '</div>';
       } else if (songMatch) {
@@ -2049,6 +2050,9 @@ function renderYear(idx) {
         infoPanel.querySelectorAll('.anim-fade-up').forEach(el => el.classList.add('visible'));
       }
     }, 100);
+
+    // Initialize Spotify embed with autoplay
+    setTimeout(initSpotifyPlayer, 300);
 
     // Celebrate milestone years
     if (y === 1966 || y === 1992 || y === 2025 || age === 21 || age === 30 || age === 40 || age === 50) {
@@ -2811,6 +2815,54 @@ buildSidebar(); buildTL(); showCover();
 initAmbientParticles();
 init3DTilt();
 showKeyboardHints();
+
+/* ═══════ SPOTIFY IFRAME API — RELIABLE AUTOPLAY ═══════ */
+var spotifyAPIReady = false;
+var spotifyPendingId = null;
+var spotifyCurrentController = null;
+
+window.onSpotifyIframeApiReady = function(IFrameAPI) {
+  spotifyAPIReady = true;
+  if (spotifyPendingId) {
+    createSpotifyEmbed(spotifyPendingId);
+    spotifyPendingId = null;
+  }
+};
+
+function createSpotifyEmbed(trackId) {
+  var target = document.getElementById('spotify-embed-target');
+  if (!target) return;
+  // Destroy previous controller if any
+  if (spotifyCurrentController) {
+    try { spotifyCurrentController.destroy(); } catch(e) {}
+    spotifyCurrentController = null;
+  }
+  target.innerHTML = '';
+  if (!spotifyAPIReady) {
+    spotifyPendingId = trackId;
+    return;
+  }
+  var options = {
+    uri: 'spotify:track:' + trackId,
+    width: '100%',
+    height: 152,
+    theme: 0
+  };
+  IFrameAPI.createController(target, options, function(controller) {
+    spotifyCurrentController = controller;
+    controller.addListener('ready', function() {
+      controller.play();
+    });
+  });
+}
+
+function initSpotifyPlayer() {
+  var target = document.getElementById('spotify-embed-target');
+  if (!target) return;
+  var trackId = target.getAttribute('data-spotify-id');
+  if (trackId) createSpotifyEmbed(trackId);
+}
 </script>
+<script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
 </body>
 </html>
