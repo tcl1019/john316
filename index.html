@@ -1963,6 +1963,12 @@ function renderYear(idx) {
         '<div class="personal-caption">' + (h.personal_caption||'') + '</div>' +
       '</div>';
     }
+    if (h.personal_photo2) {
+      personalHTML += '<div class="ctx-block personal-hero anim-fade-up" data-delay="' + (h.personal_photo ? '8' : '7') + '">' +
+        '<img class="personal-photo" src="' + h.personal_photo2 + '" alt="' + (h.personal_caption2||'') + '" onclick="openLBspecial(\'' + h.personal_photo2 + '\',\'' + (h.personal_caption2||'').replace(/'/g,"\\'") + '\')">' +
+        '<div class="personal-caption">' + (h.personal_caption2||'') + '</div>' +
+      '</div>';
+    }
     ctx += personalHTML;
 
     if (h.oakland) ctx += '<div class="ctx-block ctx-oakland anim-fade-up" data-delay="' + (h.personal_photo ? '8' : '7') + '"><div class="ctx-label">Oakland</div><p>' + h.oakland + '</p>' +
