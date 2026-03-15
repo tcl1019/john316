@@ -1911,6 +1911,7 @@ function renderYear(idx) {
   let milestones = '';
   if (y === 1966) milestones = '<div class="milestone-badge">\uD83C\uDF1F Born This Day</div>';
   else if (y === 1992) milestones = '<div class="milestone-badge">\uD83D\uDC76 Tyla Is Born</div>';
+  else if (y === 2001) milestones = '<div class="milestone-badge">\uD83D\uDC76 Kyra Is Born</div>';
   else if (age === 21) milestones = '<div class="milestone-badge">\uD83C\uDF89 Turning 21</div>';
   else if (age === 30) milestones = '<div class="milestone-badge">\uD83C\uDF82 The Big 30</div>';
   else if (age === 40) milestones = '<div class="milestone-badge">\uD83C\uDF82 The Big 40</div>';
@@ -2051,7 +2052,7 @@ function renderYear(idx) {
     }, 100);
 
     // Celebrate milestone years
-    if (y === 1966 || y === 1992 || y === 2025 || age === 21 || age === 30 || age === 40 || age === 50) {
+    if (y === 1966 || y === 1992 || y === 2001 || y === 2025 || age === 21 || age === 30 || age === 40 || age === 50) {
       setTimeout(launchConfetti, 600);
     }
   }
@@ -2218,6 +2219,7 @@ function buildHighlightsGrid() {
     { year: 1987, emoji: '\u{1F37B}', badge: 'Turning 21', desc: 'Finally legal \u2014 the world is yours', color: decadeHex(1987) },
     { year: 1992, emoji: '\u{1F476}', badge: 'Tyla Is Born', desc: 'The year that changed everything', color: decadeHex(1992) },
     { year: 1996, emoji: '\u{1F382}', badge: 'The Big 30', desc: 'Three decades young', color: decadeHex(1996) },
+    { year: 2001, emoji: '\u{1F476}', badge: 'Kyra Is Born', desc: 'September 12 \u2014 welcome to the world, Kyra', color: decadeHex(2001) },
     { year: 2006, emoji: '\u{1F382}', badge: 'The Big 40', desc: 'Four decades of front pages', color: decadeHex(2006) },
     { year: 2016, emoji: '\u{1F382}', badge: 'The Big 50', desc: 'Half a century of March 16ths', color: decadeHex(2016) },
     { year: 2025, emoji: '\u{1F389}', badge: 'The Big 60', desc: 'Six decades \u2014 a diamond milestone', color: decadeHex(2025) }
