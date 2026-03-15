@@ -467,6 +467,13 @@
     animation: fadeUp 0.5s 0.15s ease forwards; opacity: 0; transform: translateY(8px);
     box-shadow: 0 2px 12px color-mix(in srgb, var(--current-decade) 15%, transparent);
   }
+  /* Full-width year-info when no image panel */
+  .year-view .year-info:only-child {
+    position: relative; left: auto; top: auto; bottom: auto;
+    width: 100%; max-width: 680px; margin: 40px auto;
+    height: auto; min-height: auto;
+  }
+
   /* ═══════ BIRTHDAY FINALE (2026) ═══════ */
   .birthday-finale {
     text-align: center; padding: 40px 20px 60px; margin-top: 20px;
@@ -2091,6 +2098,7 @@ function renderYear(idx) {
         '</div>' +
         milestones +
         ctx +
+        (y === 2026 ? '' :
         '<div class="yi-links anim-fade-up" data-delay="' + (h.personal_photo ? '10' : '9') + '">' +
           (isEBT(y) ?
             '<a href="' + browseUrl(y) + '" target="_blank">View on Wayback Machine</a>'
@@ -2099,7 +2107,7 @@ function renderYear(idx) {
             '<a href="' + browseUrl(y) + '" target="_blank">Browse this day</a>' +
             '<a href="Oakland_Tribune_' + y + '_03_16_1.pdf" target="_blank">Open PDF</a>'
           ) +
-        '</div>' +
+        '</div>') +
         (y === 1992 ?
           '<div class="special-pages anim-fade-up" data-delay="' + (h.personal_photo ? '11' : '10') + '">' +
             '<div class="special-divider"><span>Also in the Tribune, 1992</span></div>' +
@@ -2116,6 +2124,7 @@ function renderYear(idx) {
           '</div>'
         : '') +
       '</div>' +
+      (y === 2026 ? '' :
       '<div class="year-img-panel">' +
         (IMAGE_IDS[y] ?
           '<div class="np-wrap ' + (isEBT(y) ? '' : ageCls(y)) + '" onclick="openLB(' + y + ')">' +
@@ -2126,7 +2135,7 @@ function renderYear(idx) {
         :
           '<div class="missing-placeholder">No ' + paperName(y) + ' front page was archived for March 16, ' + y + '.<em>The archive continues on the next year \u2192</em></div>'
         ) +
-      '</div>' +
+      '</div>') +
     '</div>';
 
   // Smooth transition: fade out old, swap, fade in new
